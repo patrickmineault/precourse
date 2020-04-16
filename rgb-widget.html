@@ -9,6 +9,85 @@
 <input type='range' id='b-slider' min='0' max='1' step='0.01' default='0.5'><label for='b-slider'> B: 0.5</label><br/>
 </div>
 
+<style>
+circle { mix-blend-mode: lighten; }  
+.isolate { isolation: isolate; } /* Without isolation, the background color will be taken into account */
+svg {
+  padding: 20px;
+  width: 400px;
+  height: 280px;
+}
+</style>
+
+<div background='#000'>
+<svg>
+  <defs>
+     <linearGradient id="rainbow">
+        <stop  offset="0" style="stop-color:#4C34A3"/>
+        <stop  offset="0.1067" style="stop-color:#5380AD"/>
+        <stop  offset="0.2528" style="stop-color:#2A8EB0"/>
+        <stop  offset="0.3146" style="stop-color:#4EABAE"/>
+        <stop  offset="0.3652" style="stop-color:#4CBF35"/>
+        <stop  offset="0.5056" style="stop-color:#EEF059"/>
+        <stop  offset="0.5899" style="stop-color:#F2CA61"/>
+        <stop  offset="0.6348" style="stop-color:#E48D3C"/>
+        <stop  offset="0.8034" style="stop-color:#FF5B45"/>
+        <stop  offset="1" style="stop-color:#BF2626"/>
+      </linearGradient>
+      <clipPath id="cut-off-bottom">
+        <rect x="0" y="0" width="200" height="100" />
+      </clipPath>
+  </defs>
+
+  <rect fill='#000' height="160" width="160"/>
+  <g class="isolate" transform="translate(20, 20)">
+    <circle id='r-circle' cx="40" cy="40" r="40" fill="#800"/>
+    <circle id='g-circle' cx="80" cy="40" r="40" fill="#080"/>
+    <circle id='b-circle' cx="60" cy="80" r="40" fill="#008"/>
+  </g>
+
+  <g id="vectors" transform="matrix(1 0 0 -1 210 160)">
+    <polyline points="0, 200 0, 0 200,0" fill="none" stroke="#999" stroke-width="1"/>
+    <polyline
+      id='r-line'
+      fill="none"
+      stroke="#f00"
+      stroke-width="3"
+      vector-effect="non-scaling-stroke"
+      clip-path="url(#cut-off-bottom)" />
+
+    <polyline
+      id='g-line'
+      fill="none"
+      stroke="#0f0"
+      stroke-width="3"
+      vector-effect="non-scaling-stroke"
+      clip-path="url(#cut-off-bottom)" />
+
+    <polyline
+      id='b-line'
+      fill="none"
+      stroke="#00f"
+      stroke-width="3"
+      vector-effect="non-scaling-stroke"
+      clip-path="url(#cut-off-bottom)" />    
+    <polyline
+      id='sum-line'
+      fill="none"
+      stroke="#333"
+      stroke-width="3" 
+      vector-effect="non-scaling-stroke" 
+      clip-path="url(#cut-off-bottom)" />
+    <text transform="scale(1,-1)" y="20">400nm</text>
+    <text transform="scale(1,-1)" y="20" x="99">λ</text>
+    <text transform="scale(1,-1)" y="20" x="150">700nm</text>
+    <text transform="scale(1,-1)" y="-150" x="-30">I(λ)</text>
+    <rect y="-60" width="200" height="20" fill='url(#rainbow)'/>
+    </g>
+</svg>
+</div>
+
+
 <script>
   const h = 150;
   let $ = document.querySelector.bind(document);
@@ -68,81 +147,3 @@
   setupGraph();
   updateGraph();
 </script>
-
-<style>
-circle { mix-blend-mode: lighten; }  
-.isolate { isolation: isolate; } /* Without isolation, the background color will be taken into account */
-svg {
-  padding: 20px;
-  width: 400px;
-  height: 280px;
-}
-</style>
-
-<div background='#000'>
-<svg>
-  <defs>
-  		<linearGradient id="rainbow">
-				<stop  offset="0" style="stop-color:#4C34A3"/>
-				<stop  offset="0.1067" style="stop-color:#5380AD"/>
-				<stop  offset="0.2528" style="stop-color:#2A8EB0"/>
-				<stop  offset="0.3146" style="stop-color:#4EABAE"/>
-				<stop  offset="0.3652" style="stop-color:#4CBF35"/>
-				<stop  offset="0.5056" style="stop-color:#EEF059"/>
-				<stop  offset="0.5899" style="stop-color:#F2CA61"/>
-				<stop  offset="0.6348" style="stop-color:#E48D3C"/>
-				<stop  offset="0.8034" style="stop-color:#FF5B45"/>
-				<stop  offset="1" style="stop-color:#BF2626"/>
-			</linearGradient>
-      <clipPath id="cut-off-bottom">
-        <rect x="0" y="0" width="200" height="100" />
-      </clipPath>
-  </defs>
-
-  <rect fill='#000' height="160" width="160"/>
-  <g class="isolate" transform="translate(20, 20)">
-    <circle id='r-circle' cx="40" cy="40" r="40" fill="#800"/>
-    <circle id='g-circle' cx="80" cy="40" r="40" fill="#080"/>
-    <circle id='b-circle' cx="60" cy="80" r="40" fill="#008"/>
-  </g>
-
-  <g id="vectors" transform="matrix(1 0 0 -1 210 160)">
-    <polyline points="0, 200 0, 0 200,0" fill="none" stroke="#999" stroke-width="1"/>
-    <polyline
-      id='r-line'
-      fill="none"
-      stroke="#f00"
-      stroke-width="3"
-      vector-effect="non-scaling-stroke"
-      clip-path="url(#cut-off-bottom)" />
-
-    <polyline
-      id='g-line'
-      fill="none"
-      stroke="#0f0"
-      stroke-width="3"
-      vector-effect="non-scaling-stroke"
-      clip-path="url(#cut-off-bottom)" />
-
-    <polyline
-      id='b-line'
-      fill="none"
-      stroke="#00f"
-      stroke-width="3"
-      vector-effect="non-scaling-stroke"
-      clip-path="url(#cut-off-bottom)" />    
-    <polyline
-      id='sum-line'
-      fill="none"
-      stroke="#333"
-      stroke-width="3" 
-      vector-effect="non-scaling-stroke" 
-      clip-path="url(#cut-off-bottom)" />
-    <text transform="scale(1,-1)" y="20">400nm</text>
-    <text transform="scale(1,-1)" y="20" x="99">λ</text>
-    <text transform="scale(1,-1)" y="20" x="150">700nm</text>
-    <text transform="scale(1,-1)" y="-150" x="-30">I(λ)</text>
-    <rect y="-60" width="200" height="20" fill='url(#rainbow)'/>
-    </g>
-</svg>
-</div>
